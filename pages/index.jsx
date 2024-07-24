@@ -26,12 +26,12 @@ export default function Home(initialData) {
   }
   return (
     <div className="container">
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="stylesheet" href="/styles.css"/>
-      </Head>
-
+    <Head>
+    <title>Search results for: {router.query.searchTerm}</title>
+    <meta name="description" content={initialData.giphys.map((each, index) => each.title + ' ')}></meta>
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="/styles.css"/>
+</Head>
       <h1>Giphy Search App</h1>
       <form onSubmit={search}>
         <input name="searchTerm" onChange={handleInputs} type="text" required />
@@ -52,7 +52,7 @@ export default function Home(initialData) {
   )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   let catGiphys = await fetch('https://api.giphy.com/v1/gifs/search?q=cats&api_key=Py9RZszSwuZvWTYzs4y3DbtXGuE5Z18I&limit=10')
   catGiphys = await catGiphys.json()
   return {props: {catGiphys: catGiphys}}  
